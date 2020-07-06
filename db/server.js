@@ -5,26 +5,21 @@ const initializeChanceCards = require('./initializeChanceCards');
 const connect = connectAndInvokeCallback = require('./db.connection');
 
 async function initdb(){
-  await connect(async (db) => {
-    console.log('initializing Libraries')
-    await initializeGameSpaces(db);
-    console.log( 'Loading GameSpaces');
-    await initializeCommunityChest(db);
-    console.log( 'Loading CommunityChest');
-    await initializeChanceCards(db); 
-    console.log( 'Loading Chance Cards');
-    await initializeOptions(db);
-    console.log( 'Loading Options');
-    // perform actions on the collection object
-    console.info("closing connection, libraries initialized!")
-    console.info("to start playing a game send me a message on https://localhost:3000/users/new !")
-  })
+  const db = await connect();
+  
+  await initializeGameSpaces(db).then(() => console.log('initializing Libraries'));
+  await initializeCommunityChest(db).then(() => console.log( 'Loading GameSpaces'));
+  await initializeChanceCards(db).then(() => console.log( 'Loading CommunityChest')); 
+  await initializeOptions(db).then(() => console.log( 'Loading Chance Cards'));
+  console.log( 'Loading Options');
+  // perform actions on the collection object
+  console.info("closing connection, libraries initialized!")
+  console.info("to start playing a game send me a message on https://localhost:3000/users/new !")
 }
 
 async function drop(){
-  await connect(async (db) => {
-    await db.dropDatabase(() => {});
-  })
+  const db = await connect();
+  await db.dropDatabase();
 }
 
 module.exports = {

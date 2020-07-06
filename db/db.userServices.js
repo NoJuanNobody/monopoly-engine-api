@@ -1,45 +1,30 @@
 const connect = require('./db.connection');
 const { User } = require('../game-utils/buisnessObjects/index');
 //get user by name
-async function getUserByName(name, args, callback){
-    let resp;
-    connect(async (db) => {
-        try {
-            db.collection('users').findOne({name},(err, user) => {
-                if(err) throw err;
-                callback({user, ...args});
-            }
-            )
-        } catch (error) {
-            //user not created 
-            console.err('the user was not created yet');
-        }
-    });
+async function getUserByName(name){
+    try {
+        const db = await connect();
+        return await db.collection('users').findOne({name});
+
+    } catch (error) {
+        throw error;
+    }
 }
-async function getAllUsers(callback){
-    let resp;
-    connect(async (db) => {
-        try {
-            await db.collection('users').find({}).toArray(async(err, users) => {
-                if(err) throw err;
-                await callback(users)
-            })
-        } catch (error) {
-            //user not created 
-            throw error
-        }
-    });
+
+async function getAllUsers(){
+    try{
+        const db = await connect();
+        return await db.collection('users').find({}).toArray();
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function updateUserPosition({name,newPosition}, args, callback){
     try {
-        connect(async (db) => {
-            await db.collection('users').updateOne({name}, {$set: {position: newPosition}}, async (err) => {
-                if(err) throw err
-                await callback(args)
-            })
-        })
-        
+        const db = await connect();
+        const {ops: record} = await db.collection('users').updateOne({name}, {$set: {position: newPosition}});
+        return await db.collection('users').find(record[0]);
     } catch (error) {
         throw err;
     }
@@ -48,22 +33,16 @@ async function updateUserPosition({name,newPosition}, args, callback){
 async function createNewUser(name){
     const newUser = new User(name);
     try{
-        return await connect()
-            .then(async (client) => {
-                const db = await client.db('monopoly');
-                return await db.collection('users').insertOne(newUser)
-                    .then(
-                        async (client) => {
-                        const user = await db.collection('users')
-                        .findOne({'_id': client.insertedId} );
-                        console.log(resp);
-                        return user;
-                        });
-            });
-        } catch (error) {
-            throw error;
-        }
-    // return newUser;
+        const db = await connect();
+        
+        const {ops: record} = await db.collection('users').insertOne(newUser);
+        const insertedRecord = await db.collection('users').findOne(record[0]);
+        console.log("inserted record: ", insertedRecord._id);
+        return insertedRecord;
+    } catch (error) {
+        throw error;
+    }
+   
 }
 
 //update user position

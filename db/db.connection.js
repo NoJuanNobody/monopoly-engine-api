@@ -7,16 +7,17 @@ const dbName = "monopoly";
   
 function connect(){
   try {
-  return new Promise((resolve, reject)=>{
-        await MongoClient.connect(
-      uri, 
-      { useUnifiedTopology: true }
-      , async (err, client) => {
+  return new Promise(async (resolve, reject)=>{
+      await MongoClient.connect(
+        uri, 
+        { useUnifiedTopology: true }
+        , async (err, client) => 
+      {
         if(err) reject(err);
-      console.log("Connected successfully to server");
-      const db = await client.db(dbName);
-      await resolve(callback());
-  })
+        console.log("Connected successfully to server");
+        const db = await client.db(dbName);
+        await resolve(db);
+      });
   
     });
   } catch (error) {
