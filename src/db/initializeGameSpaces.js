@@ -1,7 +1,8 @@
 const properties = require('../public/javascripts/properties');
 
 async function initializeGameSpaces(db) {
-    const gameSpaces = db.collection('gameSpaces');
+    try {
+        const gameSpaces = db.collection('gameSpaces');
     const spaceArr = [];
     properties.forEach((property,i,a) => {
         spaceArr.push({
@@ -12,10 +13,12 @@ async function initializeGameSpaces(db) {
             spaceno:i,
             owner:'Bank',
             value:(100+Math.random()*50),
-            equity:0,
         })
     });
    await gameSpaces.insertMany(spaceArr)
+    } catch (error) {
+        throw new Error('database is being dropped. restart the server')
+    }
 };
 
 function determineColorFromRegex(str){

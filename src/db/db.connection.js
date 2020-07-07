@@ -14,7 +14,6 @@ function connect(){
         , async (err, client) => 
       {
         if(err) reject(err);
-        console.log("Connected successfully to server");
         const db = await client.db(dbName);
         await resolve(db);
       });

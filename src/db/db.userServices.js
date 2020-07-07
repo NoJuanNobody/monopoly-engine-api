@@ -20,13 +20,14 @@ async function getAllUsers(){
     }
 }
 
-async function updateUserPosition({name,newPosition}, args, callback){
+async function updateUserPosition({name, _id,position}){
     try {
         const db = await connect();
-        const {ops: record} = await db.collection('users').updateOne({name}, {$set: {position: newPosition}});
-        return await db.collection('users').find(record[0]);
+        const resp = await db.collection('users').updateOne({name, _id}, {$set: {position}});
+        return await db.collection('users').findOne({name,_id});
+        
     } catch (error) {
-        throw err;
+        throw error;
     }
 }
 
@@ -50,5 +51,6 @@ async function createNewUser(name){
 module.exports = {
     getUserByName, 
     createNewUser,
+    updateUserPosition,
     getAllUsers
 }

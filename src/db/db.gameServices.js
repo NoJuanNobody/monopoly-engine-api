@@ -1,19 +1,9 @@
 const connect = require('./db.connection');
 
 //get user by name
-async function getGameSpaceByPosition(position, args={}, callback){
-    connect( async (db) => {
-        try {
-            return await db.collection('gameSpaces')
-                .findOne({spaceno: position%39}, async (err, newspace) => {
-                    if(err) throw err;
-                    await callback({newspace, ...args})
-            });
-        } catch (error) {
-            //user not created 
-            throw error
-        }
-    })
+async function getGameSpaceByPosition(position){
+    const db = await connect();
+    return await db.collection('gameSpaces').findOne({spaceno: position%39})
 }
 
 // generate chance card script
