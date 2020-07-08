@@ -1,15 +1,4 @@
-const { isValidObjectId } = require("mongoose");
 
-/* TODO: user currently needs a service that keeps track of monopoly resources per user
-at any time in the game, a user should be able to access
-cash wallet id,
-property wallet id,
-gameboard position
-*/
-
-/**
- * a wallet essentially keeps track of different types fo values that can be reduced to ingame currency
- */
  class Wallet extends Object{
     constructor({name, _id}){
         super()
@@ -62,25 +51,7 @@ gameboard position
     }
 }
 
- class Token extends Object{
+ 
 
-}
-
-class JailToken extends Token{
-    constructor(){
-        this.message ="get out of jail free"
-        this.isValid = true;
-        this.injail = false;
-    }
-
-    use(){
-        this.injail = true;
-        this.isValid = false;
-    }
-}
-
-module.exports = {
-    JailToken,
-    Wallet
-}
+module.exports = Wallet
 
