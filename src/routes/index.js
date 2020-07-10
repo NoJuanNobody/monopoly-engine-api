@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const userRoutes = require('./users.js'):
+const moveRoutes = require('./move.js');
+const gameRoutes =require('./game.js');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+module.exports = {
+    userRoutes,
+    moceRoutes,
+    gameRoutes
+}
