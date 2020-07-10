@@ -1,14 +1,16 @@
 
 
 class Script{
-    constructor(message, type, val, player){
-        this.message = messagel;
-        this.type = type;
-        this.options;
+    constructor(message, options, val){
+        this.message = message;
+        this.options = { ...options };
         this.val = val;
     }
-    selectOption(option){
-        this.userSelection = option
+    option(selected){
+        this.options[selected]();
+    }
+    flatten(){
+        return this.val;
     }
     
 }

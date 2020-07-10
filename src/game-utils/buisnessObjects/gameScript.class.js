@@ -1,25 +1,19 @@
 class GameScript {
-    constructor(scripts){
+    constructor(scripts, wallet){
         this.scripts = scripts;
+        this.wallet = wallet;
     }
     
     flatten(){
-        return this.scripts.map(script => {
-            script.flatten();
-        });
+        const cash = this.scripts.reduce((total,script) => {
+            return total + script.flatten();
+        },0);
+        this.wallet.applyCash(cash);
+        return this.willBeBroke();
     }
 
-    isBankrupt(wallet){
-        return wallet.totalAudit() > 0;
-    }
-}
-class GameOption {
-    constructor(callback){
-        this.callback=callback;
-        
-    }
-    apply(args){
-        return this.callback(args);
+    willBeBroke(wallet){
+        return this.allet.totalAudit() > 0;
     }
 }
 
