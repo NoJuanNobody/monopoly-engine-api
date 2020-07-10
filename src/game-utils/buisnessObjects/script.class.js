@@ -3,7 +3,7 @@
 class Script{
     constructor(message, options, val){
         this.message = message;
-        this.options = { ...options };
+        this.options = [];
         this.val = val;
     }
     option(selected){
@@ -15,4 +15,4 @@ class Script{
     
 }
 
-modules.exports = Script;
+module.exports = Script;

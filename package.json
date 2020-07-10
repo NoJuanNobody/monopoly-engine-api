@@ -7,8 +7,8 @@
     "dev": "DEBUG=express-boilerplate:* npm start",
     "build": "docker build -t gohandrogo/monopoly-api . | ccze -m ansi",
     "run": "docker run -p 3222:3222  -dt gohandrogo/monopoly-api | ccze -m ansi",
-    "logs":"docker logs -f bold_lamarr  2>&1 | ccze -m ansi"
-},
+    "logs": "docker logs -f bold_lamarr  2>&1 | ccze -m ansi"
+  },
   "dependencies": {
     "clean-css": "^4.2.3",
     "constantinople": "^4.0.1",

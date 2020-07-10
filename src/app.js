@@ -4,9 +4,9 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const masthead = require("./public/javascripts/masthead");
-const {
-    usersRouter, moveRouter, gameRouter
-    } = require('./routes');
+const usersRouter = require('./routes/users')
+const  moveRouter = require('./routes/move')
+const  gameRouter = require('./routes/game')
 const { initdb, drop } = require('./db/server');
 var app = express();
 
@@ -29,8 +29,8 @@ console.log(masthead);
 drop();
 initdb();
 console.log(`
-this api generally takes and updates user session info for monopoly game clients
-visit the api at https://localhost:3000/
+ this api generally takes and updates user session info for monopoly game clients
+ visit the api at https://localhost:3000/
 `);
 
 // error handler

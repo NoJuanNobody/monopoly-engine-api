@@ -1,5 +1,5 @@
 const connect = require('./db.connection');
-const { Wallet } = require('../game-utils/buisnessObjects');
+const Wallet = require('../game-utils/buisnessObjects/wallet.class');
 
 async function createNewWallet({name, _id}){
     try {

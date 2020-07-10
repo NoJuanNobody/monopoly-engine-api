@@ -1,9 +1,5 @@
 const connect = require('../db/db.gameServices');
-const { 
-    generatePropertyCardScript,
-    generateCommunityCardScript,
-    generateChanceCardScript
- } = require('./db.gameServices');
+const freeparking= require('../game-utils/gameScripts/freeparking.script');
 
 /**
  * which space
@@ -13,27 +9,8 @@ const {
  */
 
  async function whichSpace(space, args={}, callback){
-     const { spaceType } = space;
-     switch (spaceType) {
-        case 'go':
-            break
-        case 'property':
-            generatePropertyCardScript(space, args, callback)
-            break
-        case'chance':
-            generatePropertyCardScript(space, args, callback)
-            break
-        case 'community':
-            generatePropertyCardScript(space, args, callback)
-            break
-        case 'free':
-        case 'jail':
-        case 'Railroad':
-        case 'Luxury':
-        case 'go to jail':
-        case 'Water Works':
-            break;
-     }
+     return freeparking();
+     
  }
  
  module.exports = whichSpace;
