@@ -3,7 +3,7 @@
 class Script{
     constructor(message, options, val){
         this.message = message;
-        this.options = [];
+        this.options = [...options];
         this.val = val;
     }
     option(selected){

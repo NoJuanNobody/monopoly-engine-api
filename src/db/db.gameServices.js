@@ -3,7 +3,9 @@ const connect = require('./db.connection');
 //get user by name
 async function getGameSpaceByPosition(position){
     const db = await connect();
-    return await db.collection('gameSpaces').findOne({spaceno: position%39})
+    // const length = await db.collection('gameSpaces').find({}).toArray().length;
+    const space = await db.collection('gameSpaces').findOne({spaceno: position%9});
+    return space;
 }
 
 // generate chance card script
@@ -20,47 +22,10 @@ function getCommunityCard(args, callback){
         callback({card, ...args})
     })
 }
-// generate property card scripts 
-// TODO: move to game utilities folder 
-function generatePropertyCardScript(space, args, callback){
-    const landed = `you have landed on ${space.name}`;
-    const rentOrOwn = space.owner===bank 
-    ? `this space is available to own for ${space.value} otherwise you can rent it for ${space.value/4}`
-    : `this space is owned by ${space.owner} and you owe them ${space.value/4}`;
-    const options = space.owner === bank ? ['pay rent', 'buy space'] : ['pay rent'];
-    const script = new Script(
-        landed.concat(rentOrOwn),
-        'property',
-        options,
-        space.value
-    )
-}
-
-
-const spaceTypes = [
-
-    //UPDATES POSITIONN
-    'jail',
-    'gotojail',
-    
-    //UPDATES WALLET
-    'luxury tax',
-    'go',
-    
-    //NOTHING
-    'freeparking',
-    
-    // POSITION AND wallet  
-    'property space',
-    'railroad',
-    'chance',
-    'community chest',
-]
 
 // class Gameboard
 module.exports = {
     getGameSpaceByPosition,
-    generatePropertyCardScript,
 }
 
     
